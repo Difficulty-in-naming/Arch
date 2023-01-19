@@ -3,7 +3,6 @@
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>latest</LangVersion>
-    <TargetFrameworks>net7.0; net6.0; netstandard2.1</TargetFrameworks>
 
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
@@ -19,10 +18,10 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <Description>A high performance c# net.6 and net.7 archetype based ECS ( Entity component system ).</Description>
     <PackageReleaseNotes>
-      Renamed References and EntityReferences to Components and EntityComponents to clarify their usage. 
-      Added World.TrimExcess to clear unused capacity and release memory. 
-      Added EntityReference to reference entities and verify that they are still existant. 
-      Entity Version now works correctly. 
+      Renamed References and EntityReferences to Components and EntityComponents to clarify their usage.
+      Added World.TrimExcess to clear unused capacity and release memory.
+      Added EntityReference to reference entities and verify that they are still existant.
+      Entity Version now works correctly.
       Small performance improvements.
     </PackageReleaseNotes>
     <PackageTags>c#;.net;.net6;.net7;ecs;game;entity;gamedev; game-development; game-engine; entity-component-system;</PackageTags>
@@ -38,6 +37,15 @@
     <PackageLicenseUrl></PackageLicenseUrl>
 
     <NoWarn>1701;1702;1591</NoWarn>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DefineConstants>TRACE;NETSTANDARD2_1_OR_GREATER</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>TRACE;NETSTANDARD2_1_OR_GREATER</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -63,9 +71,14 @@
 
   <ItemGroup>
     <PackageReference Include="Collections.Pooled" Version="2.0.0-preview.27" />
-    <PackageReference Include="CommunityToolkit.HighPerformance" Version="7.1.2" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
     <PackageReference Include="ZeroAllocJobScheduler" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CommunityToolkit.HighPerformance">
+      <HintPath>..\..\..\..\Temp\dotnet\CommunityToolkit.HighPerformance\bin\Release\netstandard2.1\publish\CommunityToolkit.HighPerformance.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

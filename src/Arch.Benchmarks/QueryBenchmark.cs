@@ -46,8 +46,8 @@ public class QueryBenchmark
         {
             var refs = _world.Get<Transform, Velocity>(in entity);
 
-            refs.t0.X += refs.t1.X;
-            refs.t0.Y += refs.t1.Y;
+            refs.t0.Value.X += refs.t1.Value.X;
+            refs.t0.Value.Y += refs.t1.Value.Y;
         });
     }
 
@@ -94,8 +94,8 @@ public class QueryBenchmark
             var refs = chunk.GetFirst<Transform, Velocity>();
             foreach (var entity in chunk)
             {
-                ref var pos = ref Unsafe.Add(ref refs.t0, entity);
-                ref var vel = ref Unsafe.Add(ref refs.t1, entity);
+                ref var pos = ref Unsafe.Add(ref refs.t0.Value, entity);
+                ref var vel = ref Unsafe.Add(ref refs.t1.Value, entity);
 
                 pos.X += vel.X;
                 pos.Y += vel.Y;

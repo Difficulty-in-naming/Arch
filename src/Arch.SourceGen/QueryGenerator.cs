@@ -1,25 +1,29 @@
-﻿using Arch.SourceGen.Fundamentals;
+﻿using System.Diagnostics;
+using System.Text;
+using Arch.SourceGen.Fundamentals;
 using ArchSourceGenerator;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace Arch.SourceGen;
 
 [Generator]
-public class QueryGenerator : IIncrementalGenerator
+public class QueryGenerator : ISourceGenerator
 {
-    public void Initialize(IncrementalGeneratorInitializationContext context)
+    public void Initialize(GeneratorInitializationContext context)
     {
         if (!Debugger.IsAttached)
         {
             //Debugger.Launch();
         }
+    }
 
-        context.RegisterPostInitializationOutput(initializationContext =>
-        {
-
-            var compileTimeStatics = new StringBuilder();
-            compileTimeStatics.AppendLine("using System;");
-            compileTimeStatics.AppendLine("namespace Arch.Core.Utils;");
-            compileTimeStatics.AppendGroups(25);
+    public void Execute(GeneratorExecutionContext context)
+    {
+        var compileTimeStatics = new StringBuilder();
+        compileTimeStatics.AppendLine("using System;");
+        compileTimeStatics.AppendLine("namespace Arch.Core.Utils;");
+        compileTimeStatics.AppendGroups(25);
 
             var delegates = new StringBuilder();
             delegates.AppendLine("using System;");
@@ -126,23 +130,22 @@ public class QueryGenerator : IIncrementalGenerator
                 """
             );
 
-            initializationContext.AddSource("CompileTimeStatics.g.cs",
+        context.AddSource("CompileTimeStatics.g.cs",
                 CSharpSyntaxTree.ParseText(compileTimeStatics.ToString()).GetRoot().NormalizeWhitespace().ToFullString());
 
-            initializationContext.AddSource("Delegates.g.cs",
+        context.AddSource("Delegates.g.cs",
                 CSharpSyntaxTree.ParseText(delegates.ToString()).GetRoot().NormalizeWhitespace().ToFullString());
 
-            initializationContext.AddSource("Interfaces.g.cs",
+        context.AddSource("Interfaces.g.cs",
                 CSharpSyntaxTree.ParseText(interfaces.ToString()).GetRoot().NormalizeWhitespace().ToFullString());
 
-            initializationContext.AddSource("References.g.cs",
+        context.AddSource("References.g.cs",
                 CSharpSyntaxTree.ParseText(references.ToString()).GetRoot().NormalizeWhitespace().ToFullString());
 
-            initializationContext.AddSource("Jobs.g.cs",
+        context.AddSource("Jobs.g.cs",
                 CSharpSyntaxTree.ParseText(jobs.ToString()).GetRoot().NormalizeWhitespace().ToFullString());
 
-            initializationContext.AddSource("Acessors.g.cs",
+        context.AddSource("Acessors.g.cs",
                 CSharpSyntaxTree.ParseText(accessors.ToString()).GetRoot().NormalizeWhitespace().ToFullString());
-        });
     }
 }

@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace Arch.SourceGen;
 
 public static class StringBuilderExtensions

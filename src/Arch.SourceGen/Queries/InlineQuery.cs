@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Text;
 namespace Arch.SourceGen;
 
 public struct InterfaceInfo

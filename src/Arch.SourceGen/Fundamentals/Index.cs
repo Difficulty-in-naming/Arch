@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace Arch.SourceGen.Fundamentals;
 
 public static class IndexExtensions

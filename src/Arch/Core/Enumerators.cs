@@ -34,7 +34,7 @@ public ref struct Enumerator<T>
 #else
         _ptr = new Ref<T>(ref span.DangerousGetReference());
 #endif
-
+        
         _length = span.Length;
         _index = _length;
     }
