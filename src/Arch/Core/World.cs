@@ -524,6 +524,22 @@ public partial class World
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public T? QueryUnique<T>()
+    {
+        var query = Query(new QueryDescription().WithAny<T>());
+        foreach (ref var chunk in query.GetChunkIterator())
+        {
+            var chunkSize = chunk.Size;
+            T?[] array = chunk.GetArray<T>();
+            if (array.Length > 0)
+            {
+                return array[0];
+            }
+        }
+        return default(T);
+    }
+
     /// <summary>
     ///     Searches all matching <see cref="Entity"/>'s by a <see cref="QueryDescription"/> and calls the <see cref="IForEach"/> struct.
     ///     Inlines the call and is therefore faster than normal queries.
